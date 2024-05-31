@@ -22,6 +22,7 @@ pages = {
     "Uber from Documentation": "pages/5_Uber_from_doc.py"
 }
 
+
 # Selectbox for navigation
 selected_page = st.sidebar.selectbox("Select a page", list(pages.keys()))
 
