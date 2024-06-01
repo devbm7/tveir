@@ -2,8 +2,18 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 from transformers import pipeline
+import time
 
 st.title('3 - *HuggingFace* :blue[Tutorial]')
+
+def slowly_display_text(text, delay=0.05):
+    placeholder = st.empty()
+    displayed_text = ""
+    
+    for char in text:
+        displayed_text += char
+        placeholder.text(displayed_text)
+        time.sleep(delay)
 
 ######################################################
 st.subheader('Pipe1 :- Sentiment Analysis',divider='orange')
@@ -30,7 +40,7 @@ if st.checkbox(label='Show Pipe2'):
     x = st.text_input(label='Enter text', value="In this course we'll teach you how to")
     res2 = generator(x,max_length=70)
     st.write("Generated text is:")
-    st.write_stream(f":green[{res2[0]['generated_text']}]")
+    st.write(f":green[{slowly_display_text(res2[0]['generated_text'])}]")
     st.write(res2)
 
 
