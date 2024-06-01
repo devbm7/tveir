@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 from transformers import pipeline
 import time
+import html
 
 st.title('3 - *HuggingFace* :blue[Tutorial]')
 
