@@ -2,9 +2,11 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 from transformers import pipeline
+from transformers import AutoTokenizer, AutoModelForSequenceClassification
 import time
 import html
-
+import torch
+import torch.nn.functional as F
 st.title('3 - *HuggingFace* :blue[Tutorial]')
 
 def slowly_display_text(text, delay=0.05):
@@ -39,7 +41,15 @@ def slowly_display_text(text, delay=0.05):
 st.subheader('Pipe1 :- Sentiment Analysis',divider='orange')
 
 if st.checkbox(label='Show Pipe1'):
-    classifier = pipeline('sentiment-analysis')
+    # classifier = pipeline('sentiment-analysis')
+    model_name = 'distilbert-base-uncased-finetuned-sst-2-english'
+    model = AutoModelForSequenceClassification.from_pretrained(model_name)
+    tokenizer = AutoTokenizer.from_pretrained(model_name)
+    classifier = pipeline(
+        task='sentiment-analysis',
+        model=model,
+        tokenizer=tokenizer
+    )
 
     x = st.text_input(label='Enter text', value="I've been waiting for a huggingface course my whoole life.")
     res = classifier(x)
@@ -49,6 +59,38 @@ if st.checkbox(label='Show Pipe1'):
     col1.metric(label='Prediction', value=res[0]['label'])
     col2.metric(label='Score', value=res[0]['score'])
     st.write(res)
+    if st.checkbox(label='Show Tokenizer Explanation'):
+        res = tokenizer(x)
+        st.write(res)
+        tokens = tokenizer.tokenize(x)
+        st.write(tokens)
+        ids = tokenizer.convert_tokens_to_ids(tokens)
+        st.write((ids))
+        decoded_string = tokenizer.decode(ids)
+        st.write(decoded_string)
+    if st.checkbox(label='show for multiple sentences'):
+        X_train = [
+            "I've been waiting for a huggingface course my whole life.",
+            "I am happy.",
+            "I lost a match today."
+        ]
+        res = classifier(X_train)
+        st.write(res)
+        batch = tokenizer(X_train,padding=True,truncation=True, max_length=512,return_tensors='pt')
+        st.write(batch)
+        with torch.no_grad():
+            outputs = model(**batch)
+            st.write(outputs)
+            predictions = F.softmax(outputs.logits, dim=1)
+            st.write(predictions)
+            labels = torch.argmax(predictions, dim=1)
+            st.write(labels)
+        save_directory = 'p/'
+        tokenizer.save_pretrained(save_directory=save_directory)
+        model.save_pretrained(save_directory=save_directory)
+
+        tok = AutoTokenizer.from_pretrained(save_directory)
+        mod = AutoModelForSequenceClassification.from_pretrained(save_directory)
 
 ######################################################
 st.subheader('Pipe2 :- Text Generation',divider='orange')
