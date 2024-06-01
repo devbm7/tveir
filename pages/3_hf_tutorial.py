@@ -68,7 +68,7 @@ if st.checkbox(label='Show Pipe1'):
         st.write((ids))
         decoded_string = tokenizer.decode(ids)
         st.write(decoded_string)
-    if st.checkbox(label='show for multiple sentences'):
+    if st.checkbox(label='show for multiple sentences and saving-loading of models'):
         X_train = [
             "I've been waiting for a huggingface course my whole life.",
             "I am happy.",
