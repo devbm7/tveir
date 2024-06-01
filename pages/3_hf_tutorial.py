@@ -15,14 +15,12 @@ if st.checkbox(label='Show Pipe1'):
     sentence = "I've been waiting for a huggingface course my whole life."
     res = classifier(sentence)
 
-    st.write(res)
     st.write("Given Sentence is :",sentence)
-    st.write("Prediction for this: ", res[0]['label'])
-    st.write("Score for this: ", res[0]['score'])
+    st.write(res)
     x = st.text_input(label='Enter text', value="I've been waiting for a huggingface course my whoole life.")
     res = classifier(x)
-    st.markdown(body=f"*Prediction*: {res[0]['label']}")
-    st.markdown(f"*Score*: {res[0]['score']}")
+    st.markdown(body=f"*Prediction*: :green-background[{res[0]['label']}]")
+    st.markdown(f"*Score*: :green-background[{res[0]['score']}]")
 
 ######################################################
 st.subheader('Pipe2 :- Text Generation',divider='orange')
