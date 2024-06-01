@@ -41,6 +41,7 @@ st.subheader('Pipe3', divider='orange')
 if st.checkbox(label='Show Pipe3'):
     clf2 = pipeline(
         task='zero-shot-classification',
+        model = 'distilbert/distilbert-base-uncased-finetuned-sst-2-english',
         framework='pt'
     )
     sentence = "This is a course about python list comprehension"
