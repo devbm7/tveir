@@ -43,8 +43,11 @@ if st.checkbox(label='Show Pipe1'):
 
     x = st.text_input(label='Enter text', value="I've been waiting for a huggingface course my whoole life.")
     res = classifier(x)
-    st.markdown(body=f"*Prediction*: :green-background[{res[0]['label']}]")
-    st.markdown(f"*Score*: :green-background[{res[0]['score']}]")
+    # st.markdown(body=f"*Prediction*: :green-background[{res[0]['label']}]")
+    # st.markdown(f"*Score*: :green-background[{res[0]['score']}]")
+    col1, col2 = st.column(2)
+    col1.metric(label='Prediction', value=res[0]['label'])
+    col2.metric(label='Score', value=res[0]['score'])
     st.write(res)
 
 ######################################################
