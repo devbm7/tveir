@@ -45,7 +45,7 @@ if st.checkbox(label='Show Pipe1'):
     res = classifier(x)
     # st.markdown(body=f"*Prediction*: :green-background[{res[0]['label']}]")
     # st.markdown(f"*Score*: :green-background[{res[0]['score']}]")
-    col1, col2 = st.column(2)
+    col1, col2 = st.columns(2)
     col1.metric(label='Prediction', value=res[0]['label'])
     col2.metric(label='Score', value=res[0]['score'])
     st.write(res)
