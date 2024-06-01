@@ -14,7 +14,7 @@ st.title('3 - *HuggingFace* :blue[Tutorial]')
 #         displayed_text += char
 #         placeholder.text(displayed_text)
 #         time.sleep(delay)
-def slowly_display_text(text, delay=0.05):
+def slowly_display_text(text, delay=0.04):
     # Define the CSS for the text container
     css = """
     <style>
@@ -25,6 +25,7 @@ def slowly_display_text(text, delay=0.05):
         word-wrap: break-word; /* Ensure long words wrap */
         font-family: 'Courier New', Courier, monospace;
         font-size: 1.1em;
+        text-color: green;
         line-height: 1.5;
     }
     </style>
@@ -65,7 +66,7 @@ if st.checkbox(label='Show Pipe2'):
     x = st.text_input(label='Enter text', value="In this course we'll teach you how to")
     res2 = generator(x,max_length=70)
     st.write("Generated text is:")
-    st.write(f":green[{slowly_display_text(res2[0]['generated_text'])}]")
+    st.write(f"{slowly_display_text(res2[0]['generated_text'])}")
     st.write(res2)
 
 
