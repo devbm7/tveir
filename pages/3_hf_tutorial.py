@@ -4,6 +4,7 @@ import numpy as np
 from transformers import pipeline
 
 st.title('3 - *HuggingFace* :blue[Tutorial]')
+st.divider()
 
 ######################################################
 st.subheader('Pipe1 :- Sentiment Analysis',divider='orange')
@@ -18,6 +19,9 @@ if st.checkbox(label='Show Pipe1'):
     st.write("Given Sentence is :",sentence)
     st.write("Prediction for this: ", res[0]['label'])
     st.write("Score for this: ", res[0]['score'])
+    x = st.text_input(label='Enter text', value="I've been waiting for a huggingface course my whoole life.")
+    res = classifier(x)
+    st.markdown(body=f"Prediction: {res[0]['label']} \n Score: {res[0]['score']}")
 
 ######################################################
 st.subheader('Pipe2 :- Text Generation',divider='orange')
