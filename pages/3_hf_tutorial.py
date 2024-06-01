@@ -21,7 +21,8 @@ if st.checkbox(label='Show Pipe1'):
     st.write("Score for this: ", res[0]['score'])
     x = st.text_input(label='Enter text', value="I've been waiting for a huggingface course my whoole life.")
     res = classifier(x)
-    st.markdown(body=f"Prediction: {res[0]['label']} \n Score: {res[0]['score']}")
+    st.markdown(body=f"*Prediction*: {res[0]['label']}")
+    st.markdown(f"*Score*: {res[0]['score']}")
 
 ######################################################
 st.subheader('Pipe2 :- Text Generation',divider='orange')
@@ -37,6 +38,10 @@ if st.checkbox(label='Show Pipe2'):
     st.write("Prompt is: ", sentence)
     st.write("Generated text is: ")
     st.write(res2[0]['generated_text'])
+    x = st.text_input(label='Enter text', value="In this course we'll teach you how to")
+    res2 = generator(x,max_length=50)
+    st.write("Generated text is:")
+    st.markdown(res2[0]['generated_text'])
 
 
 ######################################################
@@ -55,3 +60,9 @@ if st.checkbox(label='Show Pipe3'):
     )
     st.write("Text is: ", sentence)
     st.write(res3)
+    x = st.text_input(label='Enter text', value="This is a course about python list comprehension")
+    res3 = clf2(
+        x,
+        candidate_labels = ['education', 'politics', 'business']
+    )
+    st.markdown(res3)
