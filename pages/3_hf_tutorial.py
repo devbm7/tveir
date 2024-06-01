@@ -6,7 +6,33 @@ import time
 
 st.title('3 - *HuggingFace* :blue[Tutorial]')
 
-def slowly_display_text(text, delay=0.03):
+# def slowly_display_text(text, delay=0.03):
+#     # Define the CSS for the text container
+#     css = """
+#     <style>
+#     .text-container {
+#         width: 80%;
+#         max-width: 600px;
+#         white-space: pre-wrap; /* Ensure text wraps */
+#         word-wrap: break-word; /* Ensure long words wrap */
+#         font-family: 'Courier New', Courier, monospace;
+#         font-size: 1.1em;
+#         line-height: 1.5;
+#     }
+#     </style>
+#     """
+    
+#     # Create a placeholder for the text
+#     placeholder = st.empty()
+#     displayed_text = ""
+    
+#     # Iterate over each character and update the text incrementally
+#     for char in text:
+#         displayed_text += char
+#         # Use <pre> to preserve whitespace and newline formatting
+#         placeholder.markdown(css + f'<div class="text-container"><pre>{displayed_text}</pre></div>', unsafe_allow_html=True)
+#         time.sleep(delay)
+def slowly_display_text(text, delay=0.05):
     # Define the CSS for the text container
     css = """
     <style>
@@ -28,9 +54,10 @@ def slowly_display_text(text, delay=0.03):
     
     # Iterate over each character and update the text incrementally
     for char in text:
-        displayed_text += char
-        # Use <pre> to preserve whitespace and newline formatting
-        placeholder.markdown(css + f'<div class="text-container"><pre>{displayed_text}</pre></div>', unsafe_allow_html=True)
+        displayed_text += html.escape(char)  # Escape HTML special characters
+        # Replace newlines with <br> tags to handle empty lines correctly
+        formatted_text = displayed_text.replace("\n", "<br>")
+        placeholder.markdown(css + f'<div class="text-container">{formatted_text}</div>', unsafe_allow_html=True)
         time.sleep(delay)
 # def slowly_display_text(text, delay=0.04):
 #     # Define the CSS for the text container
