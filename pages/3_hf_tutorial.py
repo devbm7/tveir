@@ -23,9 +23,8 @@ def slowly_display_text(text, delay=0.04):
         max-width: 600px;
         white-space: pre-wrap; /* Ensure text wraps */
         word-wrap: break-word; /* Ensure long words wrap */
-        font-family: 'Monaco', monospace;
+        font-family: 'Courier New', Courier, monospace;
         font-size: 1.1em;
-        font-color: green;
         line-height: 1.5;
     }
     </style>
