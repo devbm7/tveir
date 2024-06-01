@@ -31,7 +31,7 @@ if st.checkbox(label='Show Pipe2'):
     res2 = generator(x,max_length=70)
     st.write("Generated text is:")
     st.write_stream(f":green[{res2[0]['generated_text']}]")
-    st.markdown(res2)
+    st.write(res2)
 
 
 ######################################################
