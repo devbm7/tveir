@@ -6,7 +6,7 @@ from transformers import pipeline
 st.title('3 - *HuggingFace* :blue[Tutorial]')
 
 ######################################################
-st.subheader('Pipe1',divider='orange')
+st.subheader('Pipe1 :- Sentiment Analysis',divider='orange')
 
 if st.checkbox(label='Show Pipe1'):
     classifier = pipeline('sentiment-analysis')
@@ -20,7 +20,7 @@ if st.checkbox(label='Show Pipe1'):
     st.write("Score for this: ", res[0]['score'])
 
 ######################################################
-st.subheader('Pipe2',divider='orange')
+st.subheader('Pipe2 :- Text Generation',divider='orange')
 
 if st.checkbox(label='Show Pipe2'):
     generator = pipeline('text-generation', model='distilgpt2')
@@ -36,7 +36,7 @@ if st.checkbox(label='Show Pipe2'):
 
 
 ######################################################
-st.subheader('Pipe3', divider='orange')
+st.subheader('Pipe3 :- Zero-shot classification', divider='orange')
 
 if st.checkbox(label='Show Pipe3'):
     clf2 = pipeline(
