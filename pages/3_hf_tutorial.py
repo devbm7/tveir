@@ -65,7 +65,7 @@ if st.checkbox(label='Show Pipe2'):
     x = st.text_input(label='Enter text', value="In this course we'll teach you how to")
     res2 = generator(x,max_length=70)
     st.write("Generated text is:")
-    st.write(f"{slowly_display_text(res2[0]['generated_text'])}")
+    st.write(slowly_display_text(res2[0]['generated_text']))
     st.write(res2)
 
 
