@@ -29,8 +29,8 @@ if st.checkbox(label='Show Pipe2'):
         sentence,
         max_length = 30,
     )
-    st.write("Prompt is: ", sentence)
     st.write(res2)
+    st.write("Prompt is: ", sentence)
     st.write("Generated text is: ")
     st.write(res2[0]['generated_text'])
 
