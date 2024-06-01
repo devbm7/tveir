@@ -6,13 +6,38 @@ import time
 
 st.title('3 - *HuggingFace* :blue[Tutorial]')
 
+# def slowly_display_text(text, delay=0.05):
+#     placeholder = st.empty()
+#     displayed_text = ""
+    
+#     for char in text:
+#         displayed_text += char
+#         placeholder.text(displayed_text)
+#         time.sleep(delay)
 def slowly_display_text(text, delay=0.05):
+    # Define the CSS for the text container
+    css = """
+    <style>
+    .text-container {
+        width: 80%;
+        max-width: 600px;
+        white-space: pre-wrap; /* Ensure text wraps */
+        word-wrap: break-word; /* Ensure long words wrap */
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 1.1em;
+        line-height: 1.5;
+    }
+    </style>
+    """
+    
+    # Create a placeholder for the text
     placeholder = st.empty()
     displayed_text = ""
     
+    # Iterate over each character and update the text incrementally
     for char in text:
         displayed_text += char
-        placeholder.text(displayed_text)
+        placeholder.markdown(css + f'<div class="text-container">{displayed_text}</div>', unsafe_allow_html=True)
         time.sleep(delay)
 
 ######################################################
