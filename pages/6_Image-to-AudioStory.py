@@ -5,6 +5,11 @@ from transformers import BlipProcessor, BlipForConditionalGeneration
 from transformers import AutoModel
 from transformers import pipeline
 import torch
+from transformers import SpeechT5Processor, SpeechT5ForTextToSpeech, SpeechT5HifiGan
+from datasets import load_dataset
+import torch
+import soundfile as sf
+
 
 st.header('5 - Image-To-AudioStory', divider='violet')
 
@@ -43,11 +48,27 @@ st.write(f"Unconditional caption: {unconditional_caption}")
 ## llm - story gen
 
 ## text2speech
-audio_pipeline = pipeline(
-    task = 'text-to-speech',
-)
 
-audio_output = audio_pipeline(unconditional_caption)[0]['audio']
-st.audio(audio_output, format='audio/wav')
+processor = SpeechT5Processor.from_pretrained("microsoft/speecht5_tts")
+model = SpeechT5ForTextToSpeech.from_pretrained("microsoft/speecht5_tts")
+vocoder = SpeechT5HifiGan.from_pretrained("microsoft/speecht5_hifigan")
+
+inputs = processor(text="Hello, my dog is cute.", return_tensors="pt")
+
+# load xvector containing speaker's voice characteristics from a dataset
+embeddings_dataset = load_dataset("Matthijs/cmu-arctic-xvectors", split="validation")
+speaker_embeddings = torch.tensor(embeddings_dataset[7306]["xvector"]).unsqueeze(0)
+
+speech = model.generate_speech(inputs["input_ids"], speaker_embeddings, vocoder=vocoder)
+
+sf.write("speech.wav", speech.numpy(), samplerate=16000)
+
+st.audio("speech.wav", format='audio/wav')
+# audio_pipeline = pipeline(
+#     task = 'text-to-speech',
+# )
+
+# audio_output = audio_pipeline(unconditional_caption)[0]['audio']
+# st.audio(audio_output, format='audio/wav')
 # audio_output = audio_pipeline(unconditional_caption)
 # st.audio(data=audio_output)
