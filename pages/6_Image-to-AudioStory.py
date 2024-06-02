@@ -45,7 +45,6 @@ st.write(f"Unconditional caption: {unconditional_caption}")
 ## text2speech
 audio_pipeline = pipeline(
     task = 'text-to-speech',
-    model = 'myshell-ai/MeloTTS-English'
 )
 
 audio_output = audio_pipeline(unconditional_caption)[0]['audio']
