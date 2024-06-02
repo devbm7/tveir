@@ -2,6 +2,8 @@ import streamlit as st
 import requests
 from PIL import Image
 from transformers import BlipProcessor, BlipForConditionalGeneration
+from transformers import AutoModel
+from transformers import pipeline
 import torch
 
 st.header('5 - Image-To-AudioStory', divider='violet')
@@ -41,3 +43,10 @@ st.write(f"Unconditional caption: {unconditional_caption}")
 ## llm - story gen
 
 ## text2speech
+audio_pipeline = pipeline(
+    task = 'text-to-speech',
+    model = 'myshell-ai/MeloTTS-English'
+)
+
+audio_output = audio_pipeline(unconditional_caption)
+st.audio(data=audio_output)
