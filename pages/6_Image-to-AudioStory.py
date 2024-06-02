@@ -48,5 +48,7 @@ audio_pipeline = pipeline(
     model = 'myshell-ai/MeloTTS-English'
 )
 
-audio_output = audio_pipeline(unconditional_caption)
-st.audio(data=audio_output)
+audio_output = audio_pipeline(unconditional_caption)[0]['audio']
+st.audio(audio_output, format='audio/wav')
+# audio_output = audio_pipeline(unconditional_caption)
+# st.audio(data=audio_output)
