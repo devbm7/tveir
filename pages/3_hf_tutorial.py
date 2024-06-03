@@ -7,6 +7,9 @@ import time
 import html
 import torch
 import torch.nn.functional as F
+from PIL import Image
+import requests
+from io import BytesIO
 st.title('3 - *HuggingFace* :blue[Tutorial]')
 
 def slowly_display_text(text, delay=0.05):
@@ -124,3 +127,42 @@ if st.checkbox(label='Show Pipe3'):
         candidate_labels = ['education', 'politics', 'business']
     )
     st.write(res3)
+
+#######################################################
+st.subheader("Pipe4 :- Image Classification", divider='orange')
+
+if st.toggle(label='Show Pipe4'):
+    models = [
+        'google/vit-base-patch16-224',
+        'microsoft/resnet-50',
+        'facebook/deit-base-distilled-patch16-224',
+        'facebook/convnext-large-224',
+        'apple/mobilevit-small'
+    ]
+    model_name = st.selectbox(
+        label='Select Model',
+        options=models,
+        placeholder='google/vit-base-patch16-224',
+    )
+    pipe = pipeline("image-classification", model=model_name)
+    url = 'https://media.istockphoto.com/id/182756302/photo/hot-dog-with-grilled-peppers.jpg?s=1024x1024&w=is&k=20&c=NCHo2P94a-PfRDKzWSe4h6oACQZ-_ubZqUBj5CMSEWY='
+    response = requests.get(url=url)
+    image_bytes = BytesIO(response.content)
+    image = Image.open(image_bytes)
+    # image = Image.open(BytesIO(requests.get(url).content))
+    # use_default = st.checkbox(label='Use default image')
+    file = st.file_uploader(label='Upload image')
+    if file is not None:
+        image = Image.open(file)
+
+    res = pipe(image)
+    if st.toggle(label='Show row data'):
+        st.write(res)
+    p = pd.DataFrame(res)
+    p = p.sort_values(by='score',ascending=False)
+    col1, col2 = st.columns(2)
+    col1.write(image)
+    col2.write(p['label'])
+    st.bar_chart(p.set_index('label'))
+    st.area_chart(p.set_index('label'))
+    # col2.bar_chart(p.set_index('label'))
