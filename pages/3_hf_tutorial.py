@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 from transformers import pipeline
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
+from transformers import T5Tokenizer, T5ForConditionalGeneration
 import time
 import html
 import torch
@@ -134,10 +135,11 @@ st.subheader("Pipe4 :- Image Classification", divider='orange')
 if st.toggle(label='Show Pipe4'):
     models = [
         'google/vit-base-patch16-224',
+        'WinKawaks/vit-tiny-patch16-224',
         'microsoft/resnet-50',
         'facebook/deit-base-distilled-patch16-224',
         'facebook/convnext-large-224',
-        'apple/mobilevit-small'
+        'apple/mobilevit-small',
     ]
     model_name = st.selectbox(
         label='Select Model',
@@ -166,3 +168,29 @@ if st.toggle(label='Show Pipe4'):
     st.bar_chart(p.set_index('label'))
     st.area_chart(p.set_index('label'))
     # col2.bar_chart(p.set_index('label'))
+
+
+############################################################
+st.subheader('Pipe5: Text-To-Text Generation -> Que. Generation',divider='orange')
+
+if st.toggle(label='Show Pipe5'):
+    tokenizer = T5Tokenizer.from_pretrained("google/flan-t5-base")
+    model = T5ForConditionalGeneration.from_pretrained("google/flan-t5-base")
+
+    input_text = st.text_area(label='Enter the text from which question is to be generated:',value='Bruce Wayne is the Batman.')
+    input_text = 'Generate a question from this: ' + input_text
+    input_ids = tokenizer(input_text, return_tensors='pt').input_ids
+
+
+    outputs = model.generate(input_ids)
+    output_text = tokenizer.decode(outputs[0][1:len(outputs[0])-1])
+    if st.checkbox(label='Show Tokenized output'):
+        st.write(outputs)
+    st.write("Output is:")
+    st.write(f"{output_text}")
+    if st.toggle(label='Access model unrestricted'):
+        input_text = st.text_area('Enter text')
+        input_ids = tokenizer(input_text, return_tensors='pt').input_ids
+        outputs = model.generate(input_ids)
+        st.write(tokenizer.decode(outputs[0]))
+        st.write(outputs)
