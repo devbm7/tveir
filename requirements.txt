@@ -10,3 +10,4 @@ torch
 datasets
 soundfile
 sentencepiece
+qrcode
