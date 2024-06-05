@@ -2,6 +2,8 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 import time
+import qrcode
+import io
 
 st.header(body=':red[4]', divider='violet')
 st.sidebar.markdown('Page 4 :snowflake:')
@@ -34,3 +36,13 @@ st.session_state.counter += 1
 
 st.write(f"This page has run {st.session_state.counter} times.")
 st.button("Run it again")
+
+if st.toggle("QR Code Generation"):
+    url = st.text_input(
+        label='Enter the url',
+        value='https://www.youtube.com/watch?v=YykjpeuMNEk'
+    )
+    img = qrcode.make(url)
+    virtualfile = io.BytesIO()
+    img.save(virtualfile)
+    st.image(virtualfile)
