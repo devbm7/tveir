@@ -20,7 +20,8 @@ pages = {
     "HuggingFace Tutorial": "pages/3_hf_tutorial.py",
     "All place": "pages/4_all.py",
     "Uber from Documentation": "pages/5_Uber_from_doc.py",
-    "Image To Audio": "pages/6_Image-to-AudioStory.py"
+    "Image To Audio": "pages/6_Image-to-AudioStory.py",
+    "Question Generation": "pages/7_Question_Generator.py"
 }
 
 
