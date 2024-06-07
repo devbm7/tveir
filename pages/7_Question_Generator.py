@@ -2,7 +2,7 @@ import streamlit as st
 from transformers import pipeline
 from PyPDF2 import PdfReader
 import nltk
-
+import pandas as pd
 nltk.download('punkt')
 st.title(body='7 - Question Generation')
 
@@ -37,16 +37,23 @@ if st.toggle(label='Show Proposition 1'):
         x = i['generated_text'][10:]
         questions.append(x)
         # st.write(f':blue[{x}]')
-
-    if st.toggle(label='Show Questions'):
-        st.subheader("*Generated Questions are:*")
-        for i in s:
-            x = i['generated_text'][10:]
-            questions.append(x)
-            st.write(f':blue[{x}]')
     if st.toggle('Show Text'):
         st.write(raw_text)
+    if st.toggle(label='Show Questions'):
+        st.subheader("*Generated Questions are:*")
+        for i in questions:
+            st.write(f':blue[{i}]')
     if st.toggle(label='Show Pipeline Output'):
         st.write(s)
     if st.toggle(label='Show Questions list'):
         st.write(questions)
+
+    if questions:
+        df = pd.DataFrame(questions, columns=["Question"])
+        csv = df.to_csv(index=False).encode('utf-8')        
+        st.download_button(
+            label="Download Questions as CSV",
+            data=csv,
+            file_name='questions.csv',
+            mime='text/csv'
+        )
