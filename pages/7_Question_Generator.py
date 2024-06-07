@@ -28,7 +28,7 @@ if st.toggle(label='Show Proposition 1'):
         model = 'ramsrigouthamg/t5_squad_v1'
     )
     file = st.file_uploader(label='Upload',accept_multiple_files=True)
-    pr = st.button(label='Process')
+    # pr = st.button(label='Process')
     raw_text = get_pdf_text(file)
     sentences = nltk.sent_tokenize(text=raw_text)
     s = pipe(sentences)
@@ -44,6 +44,8 @@ if st.toggle(label='Show Proposition 1'):
             x = i['generated_text'][10:]
             questions.append(x)
             st.write(f':blue[{x}]')
+    if st.toggle('Show Text'):
+        st.write(raw_text)
     if st.toggle(label='Show Pipeline Output'):
         st.write(s)
     if st.toggle(label='Show Questions list'):
