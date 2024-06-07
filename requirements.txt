@@ -13,4 +13,3 @@ sentencepiece
 qrcode
 PyPDF2
 nltk
-nltk.download('punkt')
