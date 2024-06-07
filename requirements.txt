@@ -11,3 +11,5 @@ datasets
 soundfile
 sentencepiece
 qrcode
+PyPDF2
+nltk
