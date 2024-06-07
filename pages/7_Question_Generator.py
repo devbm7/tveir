@@ -3,6 +3,7 @@ from transformers import pipeline
 from PyPDF2 import PdfReader
 import nltk
 
+nltk.download('punkt')
 
 st.title(body='7 - Question Generation')
 
