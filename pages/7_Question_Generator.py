@@ -4,7 +4,6 @@ from PyPDF2 import PdfReader
 import nltk
 
 nltk.download('punkt')
-
 st.title(body='7 - Question Generation')
 
 
@@ -30,20 +29,22 @@ if st.toggle(label='Show Proposition 1'):
     )
     file = st.file_uploader(label='Upload',accept_multiple_files=True)
     pr = st.button(label='Process')
-    if pr:
-        with st.spinner('Processing'):
-            raw_text = get_pdf_text(file)
-            sentences = nltk.sent_tokenize(text=raw_text)
-            s = pipe(sentences)
-            questions = []
-            
+    raw_text = get_pdf_text(file)
+    sentences = nltk.sent_tokenize(text=raw_text)
+    s = pipe(sentences)
+    questions = []
+    for i in s:
+        x = i['generated_text'][10:]
+        questions.append(x)
+        # st.write(f':blue[{x}]')
+
+    if st.toggle(label='Show Questions'):
         st.subheader("*Generated Questions are:*")
-        
         for i in s:
             x = i['generated_text'][10:]
             questions.append(x)
             st.write(f':blue[{x}]')
-        if st.toggle(label='Show Pipeline Output'):
-            st.write(s)
-        if st.toggle(label='Show Questions list'):
-            st.write(questions)
+    if st.toggle(label='Show Pipeline Output'):
+        st.write(s)
+    if st.toggle(label='Show Questions list'):
+        st.write(questions)
